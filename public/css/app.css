@@ -7152,6 +7152,9 @@ body {
 .container {
   height: 100%; }
 
+.btn {
+  box-shadow: none !important; }
+
 .checkbox,
 .radio {
   position: relative;

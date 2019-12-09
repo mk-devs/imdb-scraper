@@ -48,6 +48,10 @@
 								<a class="btn btn-primary" :href="movie.link" target="_block">More details</a>
 							</span>
 						</div>
+						<div class="mt-3 text-right recommend-again">
+							Watched it? 
+							<button class="btn btn-link px-0 py-0" @click="submit">Recommend different movie</button>
+						</div>
 					</template>
 				</div>
 			</div>
@@ -202,5 +206,13 @@
 		font-size: 13px;
 		margin-bottom: 8px;
 		margin-top: 8px;
+	}
+	.recommend-again {
+		font-size: 13px;
+		& .btn {
+			text-decoration: none !important;
+			font-size: 13px;
+			vertical-align: 0;
+		}
 	}
 </style>
