@@ -11,7 +11,7 @@
 						<div class="error" v-if="error">Please Select Category</div>
 						<select class="form-control" v-model="categroy">
 							<option disabled="" :value="null">Select Category</option>
-							<option value="drame">Drama</option>
+							<option value="drama">Drama</option>
 							<option value="action">Action</option>
 							<option value="comedy">Comedy</option>
 							<option class="fantast">Fantasy</option>
@@ -72,7 +72,8 @@
 
     			_this.loading = true;
     			this.$http.get('/scrape/' + _this.categroy).then((res) => {
-    				let data = res.data.data[0];
+    				let data = res.data.data;
+    				// console.log(data)
     				_this.movie = {
 						image: data.image.replace(/(@)(.*)(_.)/, '@.'),
 						link: "https://www.imdb.com"+data.link,

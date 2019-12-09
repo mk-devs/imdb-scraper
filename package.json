@@ -19,7 +19,7 @@
         "@babel/runtime-corejs2": "^7.0.0",
         "@wordpress/babel-preset-default": "^2.1.0",
         "autoprefixer": "^9.1.3",
-        "axios": ">=0.18.1",
+        "axios": "^0.16.2",
         "babel-loader": "^8.0.0",
         "bootstrap": "^4.3.1",
         "jquery": "^3.2",
@@ -43,8 +43,9 @@
     },
     "dependencies": {
         "body-parser": "^1.18.1",
+        "cheerio": "^1.0.0-rc.3",
         "cors": "^2.8.4",
         "express": "^4.15.4",
-        "scavenger": "^3.3.0"
+        "nightmare": "^3.0.2"
     }
 }
