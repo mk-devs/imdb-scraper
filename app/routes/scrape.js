@@ -3,11 +3,12 @@ const express = require('express'),
       rp = require('request-promise'),      
       cheerio = require('cheerio');
 
-router.get('/:category', (req, res, next) => {
+router.get('/movie', (req, res, next) => {
     try {
-        const category = req.params.category;
-        let rand = Math.floor(Math.random() * 20) + 1;
-        const url = `https://www.imdb.com/search/title/?genres=${category}&sort=user_rating,desc&start=${rand}&title_type=feature&num_votes=25000,`;        
+        const category = req.query.category;
+        const sort = req.query.sort;
+        let rand = Math.floor(Math.random() * 10) + 1;
+        const url = `https://www.imdb.com/search/title/?title_type=feature&num_votes=25000,&genres=${category}&sort=${sort}&start=${rand}`
 
         rp(url)
             .then(function (html) {

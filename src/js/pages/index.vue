@@ -6,22 +6,34 @@
 				<div class="card-body" :class="{'loading': loading}">
 					<template v-if="!ready">
 						<h3 class="text-center mb-3">Movie Recommendation</h3>
-						<label class="mt-1 mb-3">Select Your favorite Categroy:</label>
+						
+						<span v-for="(step, index) in steps" v-show="index == currentStep">
+							<label class="mt-1 mb-3 text-center w-100">
+								{{ step.title }}
+							</label>
+							<div class="text-center">
+								<div class="radio" 
+									 v-for="(option, i) in step.options">
+									<input type="radio"
+										   :id="step.model+i" 
+										   :value="option.value" 											   
+										   v-model="form[step.model]">
 
-						<div class="error" v-if="error">Please Select Category</div>
-						<select class="form-control" v-model="categroy">
-							<option disabled="" :value="null">Select Category</option>
-							<option value="drama">Drama</option>
-							<option value="action">Action</option>
-							<option value="comedy">Comedy</option>
-							<option class="fantast">Fantasy</option>
-							<option class="war">War</option>
-							<option class="romance">Romance</option>
-							<option class="adventure">Adventure</option>
-						</select>
+									<label :for="step.model+i">
+										{{ option.text }}
+									</label>
+								</div>
+							</div>
+							<div class="error" v-if="error">Field is required!</div>							
+						</span>
 
 						<div class="text-right mt-auto">
-							<button class="btn btn-success" @click="submit">Submit</button>
+							<span v-if="currentStep != steps.length - 1">
+								<button class="btn btn-success" @click="nextStep">Next</button>
+							</span>
+							<span v-else>
+								<button class="btn btn-success" @click="submit">Submit</button>
+							</span>
 						</div>
 					</template>
 					<template v-else>
@@ -47,18 +59,53 @@
     export default {
 		data: function () {
 			return {
-				error: false,
+				form: {
+					category: '',
+					sort: ''
+				},
+				steps: [
+					{
+						title: 'Who are you going to watch with?',
+						options: [
+							{value: 'family', text: 'Family'}, 
+							{value: 'partner', text: 'Partner'}, 
+							{value: 'alone', text: 'Alone'}, 
+						],
+						model: ''
+					},
+					{
+						title: 'Enter your preferred genre:',
+						options: [
+							{value: 'drama', text: 'Drama'}, 
+							{value: 'action', text: 'Action'}, 
+							{value: 'comedy', text: 'Comedy'}, 
+							{value: 'fantasy', text: 'Fantasy'}, 
+							{value: 'romance', text: 'Romance'}, 
+							{value: 'adventure', text: 'Adventure'}, 
+							{value: 'animation', text: 'Animation'}, 
+							{value: 'horror', text: 'Horror'}, 
+						],
+						model: 'category'
+					},
+					{
+						title: 'What kind of movies do you like to watch?',
+						options: [
+							{value: 'year,asc', text: 'Classic'}, 
+							{value: 'year,desc', text: 'Modern'}, 
+							{value: 'user_rating,desc', text: 'Top Rated'}, 
+						],
+						model: 'sort'						
+					}
+				],
 				movie: {
 					image: "",
 					link: "",
 					title: "",
 					subtext: "",
 					desc: "",
-					// rating: "9.2",
-					// runtime: "175 min",
-					// genre: "Crime, Drama",
 				},
-				categroy: null,
+				currentStep: 0,				
+				error: false,				
 				ready: false,				
 				loading: false
 			}
@@ -66,24 +113,21 @@
 		methods: {
 			submit: function () {
     			let _this = this;
-    			if(!_this.categroy) {
+    			let lastModel = _this.steps[_this.steps.length - 1].model;
+    			if(!_this.form[lastModel]) {
     				_this.error = true;
     				return false;
     			}
 
     			_this.loading = true;
-    			this.$http.get('/scrape/' + _this.categroy).then((res) => {
+    			this.$http.get('/scrape/movie?category=' + _this.form.category + '&sort=' + _this.form.sort).then((res) => {
     				let data = res.data.data;
-    				// console.log(data)
     				_this.movie = {
 						image: data.image,
 						link: data.link,
 						title: data.title,
 						subtext: data.subtext,
-						desc: data.desc,						
-						// rating: data.rating,
-						// runtime: data.runtime,
-						// genre: data.genre,
+						desc: data.desc
     				}
     				_this.ready = true;
     				_this.loading = false
@@ -91,11 +135,23 @@
     				_this.loading = false;
 					console.log(error)
 				})
+			},
+			nextStep: function () {
+    			let model = this.steps[this.currentStep].model;
+    			if(!this.form[model]) {
+    				this.error = true;
+    				return false;
+    			}
+
+    			return this.currentStep++;
 			}
 		},
 		watch: {
-			'categroy': function (value) {
-				this.error = false;
+			form: {
+				handler: function() {
+					this.error = false;
+				},
+				deep: true
 			}
 		}
     }
