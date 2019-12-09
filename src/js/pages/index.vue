@@ -1,8 +1,8 @@
 <template>
 	<section class="page">
-		<span>
+		<div class="card-wrapper">
 			<div class="card">
-				<div style="background-image: url(http://www.trendycovers.com/covers/walter_white_breaking_bad_facebook_cover_1407231074.jpg);height: 120px;background-size: cover;background-position: 0px -13px;"></div>				
+				<div class="card-head" style="background-image: url(http://www.trendycovers.com/covers/walter_white_breaking_bad_facebook_cover_1407231074.jpg);"></div>				
 				<div class="card-body" :class="{'loading': loading}">
 					<template v-if="!ready">
 						<h3 class="text-center mb-3">Movie Recommendation</h3>
@@ -55,7 +55,7 @@
 					</template>
 				</div>
 			</div>
-		</span>
+		</div>
 	</section>
 </template>
 
@@ -168,15 +168,26 @@
 		justify-content: center;
 		height: 100%;
 	}
+	.card-wrapper {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
 	.card {
-		width: 550px;		
-		max-width: 100%;
+		width: 100%;		
+		max-width: 550px;
 		background-color: rgba(255,255,255,0.92);
 		border-radius: 10px;
 		border: none;
 		min-height: 370px;
 		box-shadow: 0 10px 10px 5px rgba(23, 101, 168, 0.10);
 		overflow: hidden;
+		& .card-head {
+			height: 120px;
+			background-size: cover;
+			background-position: 0px -13px;
+			background-repeat: no-repeat;
+		}
 		& .card-body {
 			display: flex;
 			flex-direction: column;
