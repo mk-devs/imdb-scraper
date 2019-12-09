@@ -1,0 +1,56 @@
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+
+body, html {
+	height: 100%;
+}
+body {
+	background-color: #919ea4;
+	background-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2)), url("https://source.unsplash.com/1600x900/?dark,water,landscape");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+#app,
+.container {
+	height: 100%;
+}
+
+.loading {
+	flex: unset;
+	display: block !important;
+	margin: 90px auto;
+	border: 2px solid transparent;
+	border-radius: 50%;
+	border-top: 2px solid #4969ad;
+	border-right: 2px solid #4969ad;
+	border-bottom: 2px solid #4969ad;
+	width: 60px;
+	height: 60px;
+	-webkit-animation: spin 2s linear infinite;
+	animation: spin 1.5s linear infinite;
+
+	&.sm {
+		margin: 0 25px;
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+	}
+	&.success {
+		border-top-color: $green;
+		border-right-color: $green;
+		border-bottom-color: $green;
+	}
+	& > * {
+		display: none !important;
+	} 
+}
+@-webkit-keyframes spin {
+	0% { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
