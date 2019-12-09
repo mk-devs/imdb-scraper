@@ -31,7 +31,7 @@
 							</span>
 							<span>
 								<h5 class="title">{{ movie.title }}</h5>
-								<p class="meta text-muted">{{ movie.genre }} | {{ movie.rating }}/10 | {{ movie.runtime }}</p>
+								<p class="meta text-muted">{{ movie.subtext }}</p>
 								<p class="desc text-muted">{{ movie.desc }}</p>
 								<a class="btn btn-primary" :href="movie.link" target="_block">More details</a>
 							</span>
@@ -49,13 +49,14 @@
 			return {
 				error: false,
 				movie: {
-					image: "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY98_CR1,0,67,98_AL_.jpg",
-					link: "/title/tt0068646/?ref_=adv_li_i",
-					title: "The Godfather",
-					rating: "9.2",
-					runtime: "175 min",
-					genre: "Crime, Drama",
-					desc: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son."
+					image: "",
+					link: "",
+					title: "",
+					subtext: "",
+					desc: "",
+					// rating: "9.2",
+					// runtime: "175 min",
+					// genre: "Crime, Drama",
 				},
 				categroy: null,
 				ready: false,				
@@ -75,13 +76,14 @@
     				let data = res.data.data;
     				// console.log(data)
     				_this.movie = {
-						image: data.image.replace(/(@)(.*)(_.)/, '@.'),
-						link: "https://www.imdb.com"+data.link,
+						image: data.image,
+						link: data.link,
 						title: data.title,
-						rating: data.rating,
-						runtime: data.runtime,
-						genre: data.genre,
-						desc: data.desc
+						subtext: data.subtext,
+						desc: data.desc,						
+						// rating: data.rating,
+						// runtime: data.runtime,
+						// genre: data.genre,
     				}
     				_this.ready = true;
     				_this.loading = false
